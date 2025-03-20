@@ -81,6 +81,12 @@ The database contains these main tables:
   - Method: POST
   - Content-Type: application/json
   - Body: `{"query": "your natural language query here"}`
+-  **Database**: PostgreSQL
+    Host: localhost
+    Port: 5432
+    Database: retail_db
+    Username: postgres
+    Password: postgres
 
 ## Future Enhancements
 
