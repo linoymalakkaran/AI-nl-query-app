@@ -16,6 +16,7 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 
 
+
 # Try to download NLTK data with SSL verification disabled
 try:
     nltk.download('punkt', quiet=True)
@@ -25,6 +26,49 @@ except:
 
 # Create Flask app with correct __name__ variable (double underscores)
 app = Flask(__name__)
+
+# Import necessary modules
+from decimal import Decimal
+import json
+import datetime
+import uuid
+
+# Create a comprehensive custom JSON encoder
+class CustomJSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        # Handle Decimal (money, numeric values)
+        if isinstance(obj, Decimal):
+            return float(obj)
+        
+        # Handle datetime and date objects
+        elif isinstance(obj, datetime.datetime):
+            return obj.isoformat()
+        elif isinstance(obj, datetime.date):
+            return obj.isoformat()
+        elif isinstance(obj, datetime.time):
+            return obj.isoformat()
+        
+        # Handle UUID objects (often used for IDs)
+        elif isinstance(obj, uuid.UUID):
+            return str(obj)
+            
+        # Handle bytes or bytearrays (binary data)
+        elif isinstance(obj, (bytes, bytearray)):
+            return obj.decode('utf-8', errors='replace')
+            
+        # Handle sets by converting to lists
+        elif isinstance(obj, set):
+            return list(obj)
+
+        # Handle any other custom objects that might implement a to_json method
+        elif hasattr(obj, 'to_json'):
+            return obj.to_json()
+            
+        return super().default(obj)
+
+# Set the custom encoder on the Flask app
+app.json_encoder = CustomJSONEncoder
+
 CORS(app)
 
 # Load sentence transformer model

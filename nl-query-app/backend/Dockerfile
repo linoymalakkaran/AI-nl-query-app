@@ -20,4 +20,5 @@ COPY . .
 EXPOSE 5000
 
 # Force requests to use unverified SSL
-CMD ["python", "-c", "import requests; requests.packages.urllib3.disable_warnings(); import ssl; ssl._create_default_https_context = ssl._create_unverified_context; import app"]
+CMD ["python", "app.py"]
+# CMD ["python", "-c", "import requests; requests.packages.urllib3.disable_warnings(); import ssl; ssl._create_default_https_context = ssl._create_unverified_context; import app"]
