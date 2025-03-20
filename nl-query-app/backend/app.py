@@ -287,8 +287,12 @@ def execute_query(sql):
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     
     try:
+        print(f"Executing SQL: {sql}")  # Print SQL query for debugging
         cursor.execute(sql)
-        results = [dict(row) for row in cursor.fetchall()]
+        results = []
+        for row in cursor.fetchall():
+            row_dict = dict(row)
+            results.append(row_dict)
         return results, None
     except Exception as e:
         return None, f"Error executing query: {str(e)}"
@@ -296,20 +300,23 @@ def execute_query(sql):
         cursor.close()
         conn.close()
 
-# Format results
-def format_results(results, nl_query):
+# Then modify the format_results function to include SQL
+def format_results(results, nl_query, sql_query):
     if not results or len(results) == 0:
         return {
             "question": nl_query,
+            "sql": sql_query,  # Include SQL query
             "message": "No information available for your query.",
             "data": []
         }
     
     return {
         "question": nl_query,
+        "sql": sql_query,  # Include SQL query
         "data": results
     }
 
+# And in your process_query route, pass the SQL to format_results:
 @app.route('/api/query', methods=['POST'])
 def process_query():
     data = request.json
@@ -331,8 +338,8 @@ def process_query():
     if error:
         return jsonify({"error": error}), 400
     
-    # Format and return results
-    response = format_results(results, nl_query)
+    # Format and return results - now including SQL
+    response = format_results(results, nl_query, sql)
     return jsonify(response)
 
 if __name__ == '__main__':

@@ -49,11 +49,60 @@
   background-color: #2980b9;
 }
 
+.query-input button:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
+
 .result-container {
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
   padding: 2rem;
+}
+
+.error-message {
+  color: #e74c3c;
+  padding: 1rem;
+  background-color: #fadbd8;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.info-message {
+  color: #2c3e50;
+  padding: 1rem;
+  background-color: #eaeded;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+/* SQL Query styles */
+.sql-query-container {
+  margin-bottom: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  padding: 1rem;
+}
+
+.sql-query-container h3 {
+  margin-top: 0;
+  font-size: 1rem;
+  color: #6c757d;
+  margin-bottom: 0.5rem;
+}
+
+.sql-query {
+  font-family: monospace;
+  background-color: #f1f3f5;
+  padding: 0.75rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  margin: 0;
+  color: #212529;
+  font-size: 0.9rem;
+  border-left: 3px solid #3498db;
 }
 
 table {

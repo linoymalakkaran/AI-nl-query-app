@@ -61,6 +61,15 @@ function App() {
             ) : (
               <>
                 <h2>{result.question}</h2>
+                
+                {/* Display the SQL query */}
+                {result.sql && (
+                  <div className="sql-query-container">
+                    <h3>SQL Query:</h3>
+                    <pre className="sql-query">{result.sql}</pre>
+                  </div>
+                )}
+                
                 <div className="result-data">
                   {result.data && result.data.length > 0 ? (
                     <table>
