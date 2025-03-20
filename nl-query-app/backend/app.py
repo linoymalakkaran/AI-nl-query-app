@@ -1,3 +1,7 @@
+# Import the monkey patch before anything else
+import monkey_patch
+
+# Now import all your other modules
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import psycopg2
@@ -11,12 +15,17 @@ import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 
+
+# Try to download NLTK data with SSL verification disabled
+try:
+    nltk.download('punkt', quiet=True)
+    nltk.download('stopwords', quiet=True)
+except:
+    print("NLTK download failed, but continuing...")
+
+# Create Flask app with correct __name__ variable (double underscores)
 app = Flask(__name__)
 CORS(app)
-
-# Download NLTK resources on startup
-nltk.download('punkt', quiet=True)
-nltk.download('stopwords', quiet=True)
 
 # Load sentence transformer model
 print("Loading language model...")
